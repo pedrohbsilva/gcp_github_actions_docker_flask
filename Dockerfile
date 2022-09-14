@@ -1,42 +1,21 @@
-# FROM python:3.10
+FROM python:3.10
 
-# ENV PYTHONDONTWRITEBYTECODE 1
-# ENV PYTHONUNBUFFERED 1
-# ENV POETRY_VERSION=1.0
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV POETRY_VERSION=1.0
 
-# # System deps:
-# RUN pip install "poetry==$POETRY_VERSION"
+# System deps:
+RUN pip3 install "poetry==$POETRY_VERSION"
 
-# # Copy only requirements to cache them in docker layer
-# WORKDIR /src/app
-# COPY poetry.lock pyproject.toml /src/app
+# Copy only requirements to cache them in docker layer
+WORKDIR /src/app
+COPY poetry.lock pyproject.toml /src/app
 
-# # Project initialization:
-# RUN poetry config virtualenvs.create false \
-#   && poetry install --no-interaction --no-ansi
+# Project initialization:
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-interaction --no-ansi
 
-# # Creating folders, and files for a project:
-# COPY . .
+# Creating folders, and files for a project:
+COPY . .
 
-# CMD poetry run flask run
-
-FROM python:3-slim as python
-ENV PYTHONUNBUFFERED=true
-WORKDIR /app
-
-
-FROM python as poetry
-ENV POETRY_HOME=/opt/poetry
-ENV POETRY_VIRTUALENVS_IN_PROJECT=true
-ENV PATH="$POETRY_HOME/bin:$PATH"
-RUN python -c 'from urllib.request import urlopen; print(urlopen("https://install.python-poetry.org").read().decode())' | python -
-COPY . ./
-RUN poetry install --no-interaction --no-ansi -vvv
-
-
-
-FROM python as runtime
-ENV PATH="/app/.venv/bin:$PATH"
-COPY --from=poetry /app /app
-EXPOSE 5000
-CMD somerandomap
+CMD poetry run flask run
