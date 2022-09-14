@@ -2,6 +2,7 @@ from src.app import create_app
 from src.app.routes import routes
 from flask.cli import with_appcontext
 import click
+import os
 from src.app.db import populate_db
 from src.app import DB
 
@@ -25,4 +26,4 @@ app.cli.add_command(delete_tables)#Adicionar na instanciação do Flask para enc
 
 
 if __name__ == "__main__":
-  app.run(port=int(os.environ.get("PORT", 8080)), host='0.0.0.0',debug=False)
+  app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0',debug=False)
