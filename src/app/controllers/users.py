@@ -14,9 +14,10 @@ from google import auth
 from google.oauth2 import id_token 
 
 user = Blueprint('user', __name__, url_prefix="/user")
-CLIENT_SECRETS_FILENAME = os.environ.get("GOOGLE_CLIENT_SECRETS", "src/app/db/client_secret.json")
-flow = Flow.from_client_secrets_file(
-  client_secrets_file=CLIENT_SECRETS_FILENAME,
+CLIENT_SECRETS_FILENAME = os.environ.get("GOOGLE_CLIENT_SECRETS")
+
+flow = Flow.from_client_config(
+  client_config=json.loads(CLIENT_SECRETS_FILENAME),
   scopes=[
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
