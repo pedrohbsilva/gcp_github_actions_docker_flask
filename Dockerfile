@@ -12,7 +12,8 @@ COPY poetry.lock /app
 COPY pyproject.toml /app
 
 RUN poetry config virtualenvs.create false \
-  && poetry install --no-interaction --no-ansi
+&& poetry install --no-interaction --no-ansi
 
-ENTRYPOINT ["python"]
-CMD ["app.py"]
+COPY . .
+
+CMD gunicorn --bind 0.0.0.0:5000 app:app
