@@ -1,6 +1,6 @@
 import requests
 import json
-
+import os
 from flask import Blueprint, request, current_app
 from flask.globals import session
 from flask.wrappers import Response
@@ -14,9 +14,9 @@ from google import auth
 from google.oauth2 import id_token 
 
 user = Blueprint('user', __name__, url_prefix="/user")
-
+CLIENT_SECRETS_FILENAME = os.environ.get("GOOGLE_CLIENT_SECRETS", "src/app/db/client_secret.json")
 flow = Flow.from_client_secrets_file(
-  client_secrets_file="src/app/db/client_secret.json",
+  client_secrets_file=CLIENT_SECRETS_FILENAME,
   scopes=[
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
