@@ -1,0 +1,14 @@
+[
+  {
+      "id": 3,
+      "tech": "Javascript"
+  },
+  {
+      "id": 1,
+      "tech": "VueJS"
+  },
+  {
+      "id": 2,
+      "tech": "JavaScript"
+  }
+]
