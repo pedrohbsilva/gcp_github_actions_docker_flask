@@ -128,5 +128,5 @@ def populate_db():
         user_object['id'],
         techs
       )
-  print("Dados inseridos com sucesso.")
+  print("Dados inseridos com sucesso.") 
   return
